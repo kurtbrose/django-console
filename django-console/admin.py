@@ -3,7 +3,10 @@ try:
 except ImportError:  # quickie fix for newer django
     patterns = lambda *a: list(a)
 from django.contrib import admin
-from django.core.context_processors import csrf
+try:
+    from django.core.context_processors import csrf
+except ImportError:  # quickie fix for newer django
+    csrf = lambda x: x
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.conf import settings
