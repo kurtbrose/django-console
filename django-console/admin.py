@@ -1,4 +1,7 @@
-from django.conf.urls import patterns
+try:
+    from django.conf.urls import patterns
+except ImportError:  # quickie fix for newer django
+    patterns = lambda *a: list(a)
 from django.contrib import admin
 from django.core.context_processors import csrf
 from django.http import HttpResponse
