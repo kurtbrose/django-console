@@ -1,7 +1,9 @@
 try:
     from django.conf.urls import patterns
 except ImportError:  # quickie fix for newer django
-    patterns = lambda *a: list(a)
+    from django.conf.urls import url
+    def patterns(base, *urls):
+        return [url(*args) for args in urls]
 from django.contrib import admin
 try:
     from django.core.context_processors import csrf
