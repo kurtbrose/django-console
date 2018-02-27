@@ -7,8 +7,9 @@ except ImportError:  # quickie fix for newer django
 from django.contrib import admin
 try:
     from django.core.context_processors import csrf
+    _OLD_DJANGO = True
 except ImportError:  # quickie fix for newer django
-    csrf = lambda x: x
+    _OLD_DJANGO = False
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.conf import settings
@@ -53,8 +54,11 @@ def console(request):
         context = {
             'STATIC_URL': settings.STATIC_URL
         }
-        context.update(csrf(request))
-        return render_to_response("django-console/admin/index.html", context)
+        if _OLD_DJANGO:
+            context.update(csrf(request))
+            return render_to_response("django-console/admin/index.html", context)
+        else:
+            return render(request, "django-console/admin/index.html", context)
     else:
         return HttpResponse("Unauthorized.", status=403)
 
