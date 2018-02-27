@@ -9,6 +9,7 @@ try:
     from django.core.context_processors import csrf
     _OLD_DJANGO = True
 except ImportError:  # quickie fix for newer django
+    from django.shortcuts import render
     _OLD_DJANGO = False
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
